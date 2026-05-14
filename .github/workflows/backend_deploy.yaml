@@ -59,6 +59,9 @@ jobs:
           else
             sed -i '1ikeep_vars = true' wrangler.toml
           fi
+          domain_list='["email.20021108.xyz", "email.qlhazycoder.tech", "email.qlhazycoder.top"]'
+          sed -i -E "s|^[[:space:]]*DEFAULT_DOMAINS[[:space:]]*=.*|DEFAULT_DOMAINS = ${domain_list}|" wrangler.toml
+          sed -i -E "s|^[[:space:]]*DOMAINS[[:space:]]*=.*|DOMAINS = ${domain_list}|" wrangler.toml
           
           pnpm install --no-frozen-lockfile
 
