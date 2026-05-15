@@ -69,6 +69,28 @@ response = requests.delete(url, headers=headers)
 print(response.json())
 ```
 
+## admin 清空邮件 API
+
+清空所有收件箱邮件。可追加可选的 `address` 查询参数，只清空某一个邮箱地址的收件箱邮件。
+
+```python
+import requests
+
+url = "https://<你的worker地址>/admin/mails"
+
+headers = {
+        "x-admin-auth": "<你的Admin密码>",
+        # "x-custom-auth": "<你的网站密码>", # 如果启用了私有站点密码
+    }
+
+response = requests.delete(url, headers=headers)
+
+# 或者只清空一个邮箱地址：
+# response = requests.delete(url, headers=headers, params={"address": "xxxx@awsl.uk"})
+
+print(response.json())
+```
+
 ## admin 删除邮箱地址 API
 
 通过邮箱地址 ID 删除邮箱地址（同时删除该地址关联的邮件、发件权限和用户绑定）。

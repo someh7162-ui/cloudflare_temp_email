@@ -2338,6 +2338,26 @@ export const MESSAGE_REGISTRY = {
       "en": "Leave blank to query all addresses",
       "zh": "留空查询所有地址"
     },
+    "clearAddressMails": {
+      "en": "Clear Address Mails",
+      "zh": "清空该邮箱邮件"
+    },
+    "clearAddressMailsTip": {
+      "en": "Are you sure to delete all inbox mails for {address}?",
+      "zh": "确定要删除 {address} 的所有收件箱邮件吗？"
+    },
+    "clearAllMails": {
+      "en": "Clear All Mails",
+      "zh": "清空全部邮件"
+    },
+    "clearAllMailsTip": {
+      "en": "Are you sure to delete all inbox mails for all addresses?",
+      "zh": "确定要删除所有邮箱的全部收件箱邮件吗？"
+    },
+    "clearMailsSuccess": {
+      "en": "Deleted {count} mails",
+      "zh": "已删除 {count} 封邮件"
+    },
     "query": {
       "en": "Query",
       "zh": "查询"

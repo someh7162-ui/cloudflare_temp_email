@@ -69,6 +69,28 @@ response = requests.delete(url, headers=headers)
 print(response.json())
 ```
 
+## Admin Clear Mails API
+
+Clear all received mails. Add the optional `address` query parameter to clear only one address.
+
+```python
+import requests
+
+url = "https://<your-worker-address>/admin/mails"
+
+headers = {
+        "x-admin-auth": "<your-Admin-password>",
+        # "x-custom-auth": "<your-website-password>", # If private site password is enabled
+    }
+
+response = requests.delete(url, headers=headers)
+
+# Or clear only one address:
+# response = requests.delete(url, headers=headers, params={"address": "xxxx@awsl.uk"})
+
+print(response.json())
+```
+
 ## Admin Delete Address API
 
 Delete an email address by address ID (also deletes associated mails, sender permissions, and user bindings).

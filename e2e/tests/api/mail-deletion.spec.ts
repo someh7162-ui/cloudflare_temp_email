@@ -178,4 +178,40 @@ test.describe('Mail Deletion', () => {
       await deleteAddress(request, jwt);
     }
   });
+
+  test('admin clears mails for one address from the mail list endpoint', async ({ request }) => {
+    const first = await createTestAddress(request, 'admin-clear-one');
+    const second = await createTestAddress(request, 'admin-clear-two');
+
+    try {
+      await seedTestMail(request, first.address, { subject: 'Admin Clear 1' });
+      await seedTestMail(request, first.address, { subject: 'Admin Clear 2' });
+      await seedTestMail(request, second.address, { subject: 'Admin Keep 1' });
+
+      const clearRes = await request.delete(
+        `${WORKER_URL}/admin/mails?address=${encodeURIComponent(first.address)}`,
+      );
+      expect(clearRes.ok()).toBe(true);
+      const clearBody = await clearRes.json();
+      expect(clearBody.success).toBe(true);
+      expect(clearBody.changes).toBe(2);
+
+      const firstAfterRes = await request.get(
+        `${WORKER_URL}/admin/mails?limit=10&offset=0&address=${encodeURIComponent(first.address)}`,
+      );
+      expect(firstAfterRes.ok()).toBe(true);
+      const firstAfter = await firstAfterRes.json();
+      expect(firstAfter.results).toHaveLength(0);
+
+      const secondAfterRes = await request.get(
+        `${WORKER_URL}/admin/mails?limit=10&offset=0&address=${encodeURIComponent(second.address)}`,
+      );
+      expect(secondAfterRes.ok()).toBe(true);
+      const secondAfter = await secondAfterRes.json();
+      expect(secondAfter.results).toHaveLength(1);
+    } finally {
+      await deleteAddress(request, first.jwt);
+      await deleteAddress(request, second.jwt);
+    }
+  });
 });

@@ -32,5 +32,16 @@ export default {
         return c.json({
             success: success
         })
+    },
+    clearMails: async (c: Context<HonoCustomType>) => {
+        const { address } = c.req.query();
+        const statement = address
+            ? c.env.DB.prepare(`DELETE FROM raw_mails WHERE address = ?`).bind(address)
+            : c.env.DB.prepare(`DELETE FROM raw_mails`);
+        const result = await statement.run();
+        return c.json({
+            success: result.success,
+            changes: result.meta?.changes ?? 0
+        })
     }
 }
